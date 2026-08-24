@@ -324,7 +324,7 @@ button {
 }
 .contact {
   margin: 0 16px 28px;
-  background: var(--lime);
+  background: #d9dcd5;
   padding: 100px 0;
 }
 .contact h2 em {

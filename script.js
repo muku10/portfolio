@@ -35,7 +35,7 @@ if (!reduceMotion.matches) {
   document.documentElement.classList.add("motion-ready");
 
   const revealTargets = document.querySelectorAll(
-    ".hero-meta, .hero-grid > *, .ticker, .section-head, .filter-bar, .project-card, .many-more, .about > *, .capabilities > *, .contact .wrap > *, .footer > *",
+    ".hero-meta, .hero-grid > *, .ticker, .section-head, .filter-bar, .project-card, .many-more, .about > *, .capabilities > *, .contact .wrap > *",
   );
 
   revealTargets.forEach((element, index) => {
