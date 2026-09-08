@@ -26,16 +26,93 @@ document.querySelectorAll(".filter").forEach((filterButton) => {
         selectedFilter === "all" || project.dataset.category === selectedFilter;
       project.classList.toggle("is-hidden", !shouldShow);
     });
+
+    updateRadialGallery();
   });
 });
 
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+const radialGallery = document.querySelector(".project-grid");
+const radialCards = radialGallery
+  ? Array.from(radialGallery.querySelectorAll(".project-card"))
+  : [];
+const radialMotion = window.matchMedia("(min-width: 900px)");
+
+const updateRadialGallery = () => {
+  if (!radialGallery) return;
+
+  if (reduceMotion.matches || !radialMotion.matches) {
+    radialGallery.style.removeProperty("--visible-count");
+    radialGallery.style.removeProperty("--gallery-progress");
+    radialCards.forEach((card) => {
+      card.classList.remove("is-active");
+      card.style.removeProperty("--radial-x");
+      card.style.removeProperty("--radial-y");
+      card.style.removeProperty("--radial-rotate");
+      card.style.removeProperty("--radial-scale");
+      card.style.removeProperty("--radial-opacity");
+      card.style.removeProperty("--radial-z");
+    });
+    return;
+  }
+
+  const visibleCards = radialCards.filter(
+    (card) => !card.classList.contains("is-hidden"),
+  );
+  const cardCount = visibleCards.length;
+
+  radialCards.forEach((card) => card.classList.remove("is-active"));
+
+  if (!cardCount) return;
+
+  const galleryRect = radialGallery.getBoundingClientRect();
+  const scrollable =
+    radialGallery.offsetHeight - Math.max(window.innerHeight, 1);
+  const rawProgress =
+    scrollable > 0 ? Math.min(Math.max(-galleryRect.top / scrollable, 0), 1) : 0;
+  const radius = Math.min(window.innerWidth * 0.28, 430);
+  const arc = 220;
+  const startAngle = -170;
+  const rotation = rawProgress * (arc + 70);
+  let activeCard = visibleCards[0];
+  let activeDistance = Infinity;
+
+  radialGallery.style.setProperty("--gallery-progress", rawProgress.toFixed(3));
+  radialGallery.style.setProperty("--visible-count", String(cardCount));
+
+  visibleCards.forEach((card, index) => {
+    const spread = cardCount === 1 ? 0 : (index / (cardCount - 1)) * arc;
+    const angle = startAngle + spread - rotation;
+    const radians = (angle * Math.PI) / 180;
+    const x = Math.cos(radians) * radius;
+    const y = Math.sin(radians) * radius * 0.42;
+    const focusDistance = Math.abs(angle + 90);
+    const normalizedFocus = Math.max(0, 1 - focusDistance / 95);
+    const scale = 0.72 + normalizedFocus * 0.28;
+    const opacity = 0.28 + normalizedFocus * 0.72;
+    const zIndex = Math.round(normalizedFocus * 100);
+
+    card.style.setProperty("--radial-x", `${x.toFixed(2)}px`);
+    card.style.setProperty("--radial-y", `${y.toFixed(2)}px`);
+    card.style.setProperty("--radial-rotate", `${((angle + 90) * 0.08).toFixed(2)}deg`);
+    card.style.setProperty("--radial-scale", scale.toFixed(3));
+    card.style.setProperty("--radial-opacity", opacity.toFixed(3));
+    card.style.setProperty("--radial-z", String(zIndex));
+
+    if (focusDistance < activeDistance) {
+      activeDistance = focusDistance;
+      activeCard = card;
+    }
+  });
+
+  activeCard.classList.add("is-active");
+};
 
 if (!reduceMotion.matches) {
   document.documentElement.classList.add("motion-ready");
 
   const revealTargets = document.querySelectorAll(
-    ".hero-meta, .hero-grid > *, .ticker, .section-head, .filter-bar, .project-card, .many-more, .about > *, .capabilities > *, .contact .wrap > *",
+    ".hero-meta, .hero-statement > *, .hero-stats, .clients, .section-head, .filter-bar, .project-card, .many-more, .about > *, .capabilities > *, .experience > *, .contact .wrap > *",
   );
 
   revealTargets.forEach((element, index) => {
@@ -55,6 +132,20 @@ if (!reduceMotion.matches) {
   );
 
   revealTargets.forEach((element) => revealObserver.observe(element));
+}
+
+if (radialGallery && !reduceMotion.matches) {
+  document.documentElement.classList.add("radial-gallery-ready");
+  radialCards.forEach((card) => {
+    card.addEventListener("mouseenter", () => {
+      radialCards.forEach((item) => item.classList.remove("is-active"));
+      card.classList.add("is-active");
+    });
+  });
+  updateRadialGallery();
+  window.addEventListener("scroll", updateRadialGallery, { passive: true });
+  window.addEventListener("resize", updateRadialGallery);
+  radialMotion.addEventListener("change", updateRadialGallery);
 }
 
 const finePointer = window.matchMedia("(pointer: fine)");

@@ -1,0 +1,52 @@
+MUKESH BHANDARI
+Web Developer
+Kathmandu, Nepal  |  +977 9818785731
+tamishbhandari2074@gmail.com  |  github.com/muku10
+
+
+29 August 2026
+
+Hiring Team
+ThemeGrill
+Kathmandu, Nepal
+
+Dear Hiring Team,
+
+I was excited to see your opening for a Mid-Level WordPress Developer because it
+feels like a natural next step for me. I enjoy building with WordPress, but I am
+especially interested in moving deeper into product development--creating and
+improving themes and plugins that solve real problems for a large number of
+users.
+
+I currently work as a Mid-Level WordPress and Laravel Developer at Codeilo
+Solutions. My day-to-day work includes building and maintaining WordPress and
+WooCommerce websites using PHP, JavaScript, and MySQL. I have worked on projects
+such as Oud Al Khoori, Perfect Pets UAE, ACube Industries, Wood Plus, Top
+Himalaya Guides, and Lucent Hire. These projects have taught me how to understand
+different business needs, find practical solutions, and deliver websites that
+are reliable and easy to use.
+
+My experience is not limited to WordPress. I also developed a Laravel-based
+reporting platform for Prabhu Insurance with data imports, validation, filters,
+analytics, and CSV exports. Working on that system made me more confident in
+handling complex data, debugging difficult issues, and writing code with
+security and maintainability in mind.
+
+What attracts me most to ThemeGrill is the opportunity to work on WordPress
+products used by people around the world. I would love to contribute the skills
+I already have in PHP, WordPress, WooCommerce, JavaScript, React, MySQL, REST
+APIs, and Git while learning from a team with strong experience in the WordPress
+ecosystem. I am comfortable working independently, but I also value honest
+feedback, clear communication, and sharing ideas with a team.
+
+I know there is always more to learn as a developer, and that is something I
+genuinely enjoy. I would be grateful for the opportunity to bring my experience,
+curiosity, and problem-solving mindset to ThemeGrill and help build products
+that your users can depend on.
+
+Thank you for taking the time to review my application. I would be happy to
+discuss my experience and projects with you.
+
+Sincerely,
+
+Mukesh Bhandari
