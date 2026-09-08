@@ -18,6 +18,10 @@
     <script src="script.js" defer></script>
   </head>
   <body>
+    <div class="page-loader" aria-hidden="true">
+      <div class="loader-bar"></div>
+      <div class="loader-text"><span>MB</span></div>
+    </div>
     <header class="site-header">
       <a class="brand" href="#top"
         ><span>MB</span><strong>Mukesh Bhandari</strong></a
@@ -49,62 +53,88 @@
     <main id="top">
       <section class="hero wrap">
         <div class="hero-meta">
-          <span>Kathmandu, Nepal</span
-          ><span class="available"><i></i>Available for opportunities</span>
+          <span class="reveal-text">Kathmandu, Nepal</span
+          ><span class="available reveal-text"><i></i>Available for opportunities</span>
         </div>
         <div class="hero-statement">
-          <h1>
-            Pretty is<br />the easy part.<br /><em>I build tools<br />that work.</em>
+          <h1 class="split-text">
+            <span class="line"><span class="word">Pretty is</span></span
+            ><span class="line"><span class="word">the easy part.</span></span
+            ><span class="line"><em><span class="word">I build tools</span></em></span
+            ><span class="line"><em><span class="word">that work.</span></em></span>
           </h1>
           <div class="hero-aside">
-            <p>
+            <p class="reveal-para">
               A full-stack developer turning complex requirements into reliable,
               straightforward digital products—from Laravel dashboards to
               WordPress and e-commerce experiences.
             </p>
-            <a href="#work" class="line-link"
-              >Explore selected work <span>↓</span></a
+            <a href="#work" class="line-link magnetic reveal-para"
+              ><span>Explore selected work</span><span class="arrow">↓</span></a
             >
           </div>
         </div>
         <div class="hero-stats">
-          <div class="stat">
-            <span class="stat-number">+3</span>
+          <div class="stat reveal-stat">
+            <span class="stat-number" data-target="3">0</span>
             <span class="stat-label">Years of experience</span>
           </div>
-          <div class="stat">
-            <span class="stat-number">12+</span>
+          <div class="stat reveal-stat">
+            <span class="stat-number" data-target="12">0</span>
             <span class="stat-label">Products delivered</span>
           </div>
-          <div class="stat">
-            <span class="stat-number">200+</span>
+          <div class="stat reveal-stat">
+            <span class="stat-number" data-target="200">0</span>
             <span class="stat-label">Schools on one platform</span>
           </div>
         </div>
       </section>
 
       <section class="clients wrap">
-        <p class="eyebrow">Trusted by teams across</p>
-        <div class="client-logos">
-          <span>Prabhu Insurance</span><span>SchoolDeeds</span
-          ><span>Perfect Pets UAE</span><span>Oud Al Khoori</span
-          ><span>ACube Industries</span><span>Wood Plus</span
-          ><span>Top Himalaya Guides</span><span>Lucent Hire</span
-          ><span>Rai's Sekuwa Corner</span><span>Dr. Vikesh Vij</span
-          ><span>Asia Management</span><span>Ascend</span>
+        <p class="eyebrow reveal-fade">Trusted by teams across</p>
+        <div class="marquee" aria-hidden="true">
+          <div class="marquee-track">
+            <span>Prabhu Insurance</span><span class="dot">•</span
+            ><span>SchoolDeeds</span><span class="dot">•</span
+            ><span>Perfect Pets UAE</span><span class="dot">•</span
+            ><span>Oud Al Khoori</span><span class="dot">•</span
+            ><span>ACube Industries</span><span class="dot">•</span
+            ><span>Wood Plus</span><span class="dot">•</span
+            ><span>Top Himalaya Guides</span><span class="dot">•</span
+            ><span>Lucent Hire</span><span class="dot">•</span
+            ><span>Rai's Sekuwa Corner</span><span class="dot">•</span
+            ><span>Dr. Vikesh Vij</span><span class="dot">•</span
+            ><span>Asia Management</span><span class="dot">•</span
+            ><span>Ascend</span><span class="dot">•</span>
+            <span>Prabhu Insurance</span><span class="dot">•</span
+            ><span>SchoolDeeds</span><span class="dot">•</span
+            ><span>Perfect Pets UAE</span><span class="dot">•</span
+            ><span>Oud Al Khoori</span><span class="dot">•</span
+            ><span>ACube Industries</span><span class="dot">•</span
+            ><span>Wood Plus</span><span class="dot">•</span
+            ><span>Top Himalaya Guides</span><span class="dot">•</span
+            ><span>Lucent Hire</span><span class="dot">•</span
+            ><span>Rai's Sekuwa Corner</span><span class="dot">•</span
+            ><span>Dr. Vikesh Vij</span><span class="dot">•</span
+            ><span>Asia Management</span><span class="dot">•</span
+            ><span>Ascend</span><span class="dot">•</span>
+          </div>
         </div>
       </section>
 
       <section id="work" class="work wrap">
         <div class="section-head">
-          <span>01</span>
+          <span class="reveal-fade">01</span>
           <div>
-            <p class="eyebrow">Selected projects</p>
-            <h2>Real products.<br /><em>Real-world use.</em></h2>
+            <p class="eyebrow reveal-fade">Selected projects</p>
+            <h2 class="split-text">
+              <span class="line"><span class="word">Real products.</span></span
+              ><span class="line"><em><span class="word">Real-world use.</span></em></span>
+            </h2>
           </div>
-          <p>Captured directly from live and local builds.</p>
+          <p class="reveal-fade">Captured directly from live and local builds.</p>
         </div>
-        <div class="filter-bar" role="group" aria-label="Filter projects">
+        <div class="filter-bar reveal-fade" role="group" aria-label="Filter projects">
           <button class="filter active" data-filter="all">All work</button
           ><button class="filter" data-filter="systems">Systems</button
           ><button class="filter" data-filter="commerce">E-commerce</button
@@ -117,7 +147,7 @@
         </div>
         <article class="featured project-card" data-category="systems">
           <a
-            class="shot"
+            class="shot parallax-img"
             href="https://dashboard.prabhuinsurance.com"
             target="_blank"
             rel="noreferrer"
@@ -128,7 +158,10 @@
           >
           <div class="project-copy">
             <p class="eyebrow">Laravel · MySQL · Bootstrap</p>
-            <h3>Prabhu Insurance<br />Transparency Dashboard</h3>
+            <h3 class="split-text">
+              <span class="line"><span class="word">Prabhu Insurance</span></span
+              ><span class="line"><span class="word">Transparency Dashboard</span></span>
+            </h3>
             <p>
               A full reporting platform that turns fiscal-year insurance records
               into public, filterable premium, claims, grievance, and financial
@@ -360,11 +393,11 @@
           </div>
         </div>
         <div class="many-more">
-          <span>12+ featured projects</span>
-          <h3>
+          <span class="reveal-fade">12+ featured projects</span>
+          <h3 class="reveal-fade">
             And many more across<br />commerce, services, and digital products.
           </h3>
-          <p>
+          <p class="reveal-fade">
             Additional client work and ongoing builds are available to discuss
             privately.
           </p>
@@ -373,22 +406,25 @@
 
       <section id="about" class="about wrap">
         <div>
-          <span>02</span>
-          <p class="eyebrow">About</p>
+          <span class="reveal-fade">02</span>
+          <p class="eyebrow reveal-fade">About</p>
         </div>
         <div>
-          <h2>I make complex things<br /><em>feel simple.</em></h2>
-          <p class="lead">
+          <h2 class="split-text">
+            <span class="line"><span class="word">I make complex things</span></span
+            ><span class="line"><em><span class="word">feel simple.</span></em></span>
+          </h2>
+          <p class="lead reveal-para">
             I'm a full-stack developer who enjoys turning complicated
             requirements into dependable, straightforward products.
           </p>
           <div class="columns">
-            <p>
+            <p class="reveal-para">
               At Codeilo Solutions, I build Laravel dashboards, WooCommerce
               stores, and company platforms for clients across insurance,
               tourism, retail, hospitality, and manufacturing.
             </p>
-            <p>
+            <p class="reveal-para">
               My toolkit includes PHP, Laravel, WordPress, WooCommerce, React,
               JavaScript, TypeScript, Tailwind CSS, Bootstrap, MySQL, Git, and
               REST APIs.
@@ -398,27 +434,27 @@
       </section>
 
       <section class="capabilities wrap">
-        <p class="eyebrow">Capabilities</p>
-        <div>
+        <p class="eyebrow reveal-fade">Capabilities</p>
+        <div class="capability-item">
           <span>01</span>
-          <h3>Web applications</h3>
-          <p>
+          <h3 class="reveal-text">Web applications</h3>
+          <p class="reveal-fade">
             Laravel systems, admin panels, imports, validation, reporting, and
             role-based workflows.
           </p>
         </div>
-        <div>
+        <div class="capability-item">
           <span>02</span>
-          <h3>WordPress & commerce</h3>
-          <p>
+          <h3 class="reveal-text">WordPress & commerce</h3>
+          <p class="reveal-fade">
             Custom business websites and multilingual WooCommerce experiences
             built for conversion.
           </p>
         </div>
-        <div>
+        <div class="capability-item">
           <span>03</span>
-          <h3>Frontend development</h3>
-          <p>
+          <h3 class="reveal-text">Frontend development</h3>
+          <p class="reveal-fade">
             Responsive, accessible interfaces with React, JavaScript,
             TypeScript, and modern CSS.
           </p>
@@ -427,32 +463,35 @@
 
       <section id="experience" class="experience wrap">
         <div class="section-head">
-          <span>03</span>
+          <span class="reveal-fade">03</span>
           <div>
-            <p class="eyebrow">Experience</p>
-            <h2>Where I've<br /><em>built things.</em></h2>
+            <p class="eyebrow reveal-fade">Experience</p>
+            <h2 class="split-text">
+              <span class="line"><span class="word">Where I've</span></span
+              ><span class="line"><em><span class="word">built things.</span></em></span>
+            </h2>
           </div>
         </div>
         <div class="exp-list">
           <div class="exp-item">
-            <div class="exp-year">2024 — Now</div>
+            <div class="exp-year reveal-fade">2024 — Now</div>
             <div class="exp-role">
-              <h3>Mid-Level WordPress & Laravel Developer</h3>
-              <p>Codeilo Solutions</p>
+              <h3 class="reveal-text">Mid-Level WordPress & Laravel Developer</h3>
+              <p class="reveal-fade">Codeilo Solutions</p>
             </div>
-            <div class="exp-desc">
+            <div class="exp-desc reveal-fade">
               Building Laravel dashboards, WooCommerce stores, and corporate
               platforms for clients across insurance, tourism, retail,
               hospitality, and manufacturing.
             </div>
           </div>
           <div class="exp-item">
-            <div class="exp-year">2022</div>
+            <div class="exp-year reveal-fade">2022</div>
             <div class="exp-role">
-              <h3>Networking Intern</h3>
-              <p>Websurfer Nepal</p>
+              <h3 class="reveal-text">Networking Intern</h3>
+              <p class="reveal-fade">Websurfer Nepal</p>
             </div>
-            <div class="exp-desc">
+            <div class="exp-desc reveal-fade">
               Maintained switch and OLT connections and monitored ISP server
               health to support network stability.
             </div>
@@ -462,23 +501,26 @@
 
       <section id="contact" class="contact">
         <div class="wrap">
-          <p class="eyebrow">Let's work together</p>
-          <h2>Have a useful idea?<br /><em>Let's build it well.</em></h2>
+          <p class="eyebrow reveal-fade">Let's work together</p>
+          <h2 class="split-text">
+            <span class="line"><span class="word">Have a useful idea?</span></span
+            ><span class="line"><em><span class="word">Let's build it well.</span></em></span>
+          </h2>
           <div>
-            <a href="mailto:tamishbhandari2074@gmail.com"
+            <a href="mailto:tamishbhandari2074@gmail.com" class="magnetic reveal-para"
               >tamishbhandari2074@gmail.com ↗</a
             >
-            <p>+977 9818785731<br />Kathmandu, Nepal</p>
+            <p class="reveal-fade">+977 9818785731<br />Kathmandu, Nepal</p>
           </div>
         </div>
       </section>
     </main>
     <footer class="footer wrap">
-      <span>Mukesh Bhandari 2026</span
-      ><a href="mailto:tamishbhandari2074@gmail.com">Get in touch ↗</a
-      ><a href="https://github.com/muku10" target="_blank" rel="noreferrer"
+      <span class="reveal-fade">Mukesh Bhandari 2026</span
+      ><a href="mailto:tamishbhandari2074@gmail.com" class="magnetic">Get in touch ↗</a
+      ><a href="https://github.com/muku10" target="_blank" rel="noreferrer" class="magnetic"
         >GitHub ↗</a
-      ><a href="#top">Back to top ↑</a>
+      ><a href="#top" class="magnetic">Back to top ↑</a>
     </footer>
   </body>
 </html>

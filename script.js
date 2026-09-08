@@ -1,23 +1,247 @@
+/* ========================================
+   PREMIUM ANIMATION SYSTEM
+   ======================================== */
+
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+const finePointer = window.matchMedia("(pointer: fine)");
+
+/* ===== PAGE LOADER ===== */
+const loader = document.querySelector(".page-loader");
+if (loader && !reduceMotion.matches) {
+  window.addEventListener("load", () => {
+    setTimeout(() => {
+      loader.classList.add("is-done");
+      document.body.classList.add("is-loaded");
+      // Trigger split text after loader
+      setTimeout(() => {
+        document.querySelectorAll(".split-text").forEach((el) => {
+          el.classList.add("is-animated");
+        });
+      }, 200);
+    }, 2000);
+  });
+} else if (loader) {
+  loader.style.display = "none";
+}
+
+/* ===== SPLIT TEXT ===== */
+if (!reduceMotion.matches) {
+  document.querySelectorAll(".split-text").forEach((el) => {
+    if (!el.classList.contains("is-animated")) {
+      // Already handled by loader for hero, but ensure others animate on scroll
+    }
+  });
+}
+
+/* ===== SCROLL REVEAL SYSTEM ===== */
+if (!reduceMotion.matches) {
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          // Trigger split text inside
+          entry.target.querySelectorAll(".split-text").forEach((st) => {
+            st.classList.add("is-animated");
+          });
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.15, rootMargin: "0px 0px -8%" },
+  );
+
+  document
+    .querySelectorAll(
+      ".reveal-fade, .reveal-para, .reveal-stat, .reveal-text, .stagger-children, .parallax-img",
+    )
+    .forEach((el) => revealObserver.observe(el));
+
+  // Stagger children observer
+  const staggerObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          staggerObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.1, rootMargin: "0px 0px -5%" },
+  );
+  document.querySelectorAll(".stagger-children").forEach((el) => staggerObserver.observe(el));
+}
+
+/* ===== COUNTER ANIMATION ===== */
+if (!reduceMotion.matches) {
+  const counterObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        const target = parseInt(el.dataset.target, 10);
+        const duration = 1800;
+        const startTime = performance.now();
+
+        const easeOutExpo = (t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t));
+
+        const animate = (now) => {
+          const elapsed = now - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          const eased = easeOutExpo(progress);
+          const current = Math.round(eased * target);
+          el.textContent = current;
+          if (progress < 1) {
+            requestAnimationFrame(animate);
+          } else {
+            el.textContent = target;
+          }
+        };
+
+        requestAnimationFrame(animate);
+        counterObserver.unobserve(el);
+      });
+    },
+    { threshold: 0.5 },
+  );
+
+  document.querySelectorAll("[data-target]").forEach((el) => counterObserver.observe(el));
+}
+
+/* ===== MAGNETIC ELEMENTS ===== */
+if (finePointer.matches && !reduceMotion.matches) {
+  document.querySelectorAll(".magnetic").forEach((el) => {
+    el.addEventListener("mousemove", (e) => {
+      const rect = el.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      el.style.transform = `translate(${x * 0.25}px, ${y * 0.25}px)`;
+    });
+    el.addEventListener("mouseleave", () => {
+      el.style.transform = "translate(0, 0)";
+    });
+  });
+}
+
+/* ===== SMOOTH PARALLAX ON SCROLL ===== */
+if (!reduceMotion.matches && finePointer.matches) {
+  const parallaxElements = document.querySelectorAll(".parallax-img");
+  let ticking = false;
+
+  window.addEventListener("scroll", () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      parallaxElements.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        if (rect.bottom < 0 || rect.top > window.innerHeight) return;
+        const progress = (rect.top / window.innerHeight) * -30;
+        const img = el.querySelector("img");
+        if (img) {
+          img.style.transform = `translateY(${progress}px) scale(1.05)`;
+        }
+      });
+      ticking = false;
+    });
+  }, { passive: true });
+}
+
+/* ===== CUSTOM CURSOR ===== */
+if (finePointer.matches && !reduceMotion.matches) {
+  const cursorDot = document.createElement("span");
+  const cursorRing = document.createElement("span");
+  cursorDot.className = "cursor-dot";
+  cursorRing.className = "cursor-ring";
+  cursorDot.setAttribute("aria-hidden", "true");
+  cursorRing.setAttribute("aria-hidden", "true");
+  document.body.append(cursorDot, cursorRing);
+  document.documentElement.classList.add("custom-cursor");
+
+  let pointerX = -40;
+  let pointerY = -40;
+  let ringX = -40;
+  let ringY = -40;
+
+  const drawCursor = () => {
+    ringX += (pointerX - ringX) * 0.14;
+    ringY += (pointerY - ringY) * 0.14;
+    cursorDot.style.transform = `translate3d(${pointerX}px, ${pointerY}px, 0)`;
+    cursorRing.style.transform = `translate3d(${ringX}px, ${ringY}px, 0)`;
+    requestAnimationFrame(drawCursor);
+  };
+
+  window.addEventListener("mousemove", (event) => {
+    pointerX = event.clientX;
+    pointerY = event.clientY;
+    document.body.classList.add("cursor-active");
+  });
+
+  document.addEventListener("mouseleave", () => {
+    document.body.classList.remove("cursor-active");
+  });
+
+  document.addEventListener("mousedown", () => {
+    document.body.classList.add("cursor-pressed");
+  });
+  document.addEventListener("mouseup", () => {
+    document.body.classList.remove("cursor-pressed");
+  });
+
+  document.querySelectorAll("a, button, .filter, .shot").forEach((element) => {
+    element.addEventListener("mouseenter", () =>
+      document.body.classList.add("cursor-hover"),
+    );
+    element.addEventListener("mouseleave", () =>
+      document.body.classList.remove("cursor-hover"),
+    );
+  });
+
+  drawCursor();
+}
+
+/* ===== HEADER SCROLL EFFECT ===== */
+const siteHeader = document.querySelector(".site-header");
+if (siteHeader) {
+  let lastScroll = 0;
+  window.addEventListener(
+    "scroll",
+    () => {
+      const currentScroll = window.scrollY;
+      if (currentScroll > 80) {
+        siteHeader.classList.add("is-scrolled");
+      } else {
+        siteHeader.classList.remove("is-scrolled");
+      }
+      lastScroll = currentScroll;
+    },
+    { passive: true },
+  );
+}
+
+/* ===== MOBILE MENU ===== */
 const menuToggle = document.querySelector(".menu-toggle");
 const siteNav = document.querySelector(".site-nav");
 
-menuToggle.addEventListener("click", () => {
-  const isOpen = siteNav.classList.toggle("open");
-  menuToggle.setAttribute("aria-expanded", String(isOpen));
-  menuToggle.textContent = isOpen ? "Close" : "Menu";
-});
-
-document.querySelectorAll(".site-nav a").forEach((link) => {
-  link.addEventListener("click", () => {
-    siteNav.classList.remove("open");
-    menuToggle.setAttribute("aria-expanded", "false");
-    menuToggle.textContent = "Menu";
+if (menuToggle && siteNav) {
+  menuToggle.addEventListener("click", () => {
+    const isOpen = siteNav.classList.toggle("open");
+    menuToggle.setAttribute("aria-expanded", String(isOpen));
+    menuToggle.textContent = isOpen ? "Close" : "Menu";
   });
-});
 
+  document.querySelectorAll(".site-nav a").forEach((link) => {
+    link.addEventListener("click", () => {
+      siteNav.classList.remove("open");
+      menuToggle.setAttribute("aria-expanded", "false");
+      menuToggle.textContent = "Menu";
+    });
+  });
+}
+
+/* ===== FILTER SYSTEM ===== */
 document.querySelectorAll(".filter").forEach((filterButton) => {
   filterButton.addEventListener("click", () => {
-    document.querySelector(".filter.active").classList.remove("active");
+    document.querySelector(".filter.active")?.classList.remove("active");
     filterButton.classList.add("active");
     const selectedFilter = filterButton.dataset.filter;
 
@@ -31,7 +255,7 @@ document.querySelectorAll(".filter").forEach((filterButton) => {
   });
 });
 
-const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+/* ===== RADIAL GALLERY ===== */
 const radialGallery = document.querySelector(".project-grid");
 const radialCards = radialGallery
   ? Array.from(radialGallery.querySelectorAll(".project-card"))
@@ -66,8 +290,7 @@ const updateRadialGallery = () => {
   if (!cardCount) return;
 
   const galleryRect = radialGallery.getBoundingClientRect();
-  const scrollable =
-    radialGallery.offsetHeight - Math.max(window.innerHeight, 1);
+  const scrollable = radialGallery.offsetHeight - Math.max(window.innerHeight, 1);
   const rawProgress =
     scrollable > 0 ? Math.min(Math.max(-galleryRect.top / scrollable, 0), 1) : 0;
   const radius = Math.min(window.innerWidth * 0.28, 430);
@@ -108,32 +331,6 @@ const updateRadialGallery = () => {
   activeCard.classList.add("is-active");
 };
 
-if (!reduceMotion.matches) {
-  document.documentElement.classList.add("motion-ready");
-
-  const revealTargets = document.querySelectorAll(
-    ".hero-meta, .hero-statement > *, .hero-stats, .clients, .section-head, .filter-bar, .project-card, .many-more, .about > *, .capabilities > *, .experience > *, .contact .wrap > *",
-  );
-
-  revealTargets.forEach((element, index) => {
-    element.classList.add("reveal-item");
-    element.style.setProperty("--reveal-delay", `${(index % 4) * 70}ms`);
-  });
-
-  const revealObserver = new IntersectionObserver(
-    (entries, observer) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add("is-visible");
-        observer.unobserve(entry.target);
-      });
-    },
-    { threshold: 0.12, rootMargin: "0px 0px -6%" },
-  );
-
-  revealTargets.forEach((element) => revealObserver.observe(element));
-}
-
 if (radialGallery && !reduceMotion.matches) {
   document.documentElement.classList.add("radial-gallery-ready");
   radialCards.forEach((card) => {
@@ -148,49 +345,15 @@ if (radialGallery && !reduceMotion.matches) {
   radialMotion.addEventListener("change", updateRadialGallery);
 }
 
-const finePointer = window.matchMedia("(pointer: fine)");
-
-if (finePointer.matches && !reduceMotion.matches) {
-  const cursorDot = document.createElement("span");
-  const cursorRing = document.createElement("span");
-  cursorDot.className = "cursor-dot";
-  cursorRing.className = "cursor-ring";
-  cursorDot.setAttribute("aria-hidden", "true");
-  cursorRing.setAttribute("aria-hidden", "true");
-  document.body.append(cursorDot, cursorRing);
-  document.documentElement.classList.add("custom-cursor");
-
-  let pointerX = -40;
-  let pointerY = -40;
-  let ringX = -40;
-  let ringY = -40;
-
-  const drawCursor = () => {
-    ringX += (pointerX - ringX) * 0.16;
-    ringY += (pointerY - ringY) * 0.16;
-    cursorDot.style.transform = `translate3d(${pointerX}px, ${pointerY}px, 0)`;
-    cursorRing.style.transform = `translate3d(${ringX}px, ${ringY}px, 0)`;
-    requestAnimationFrame(drawCursor);
-  };
-
-  window.addEventListener("mousemove", (event) => {
-    pointerX = event.clientX;
-    pointerY = event.clientY;
-    document.body.classList.add("cursor-active");
+/* ===== SMOOTH SCROLL FOR ANCHOR LINKS ===== */
+document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+  anchor.addEventListener("click", (e) => {
+    const href = anchor.getAttribute("href");
+    if (href === "#") return;
+    const target = document.querySelector(href);
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
   });
-
-  document.addEventListener("mouseleave", () => {
-    document.body.classList.remove("cursor-active");
-  });
-
-  document.querySelectorAll("a, button").forEach((element) => {
-    element.addEventListener("mouseenter", () =>
-      document.body.classList.add("cursor-hover"),
-    );
-    element.addEventListener("mouseleave", () =>
-      document.body.classList.remove("cursor-hover"),
-    );
-  });
-
-  drawCursor();
-}
+});
