@@ -202,15 +202,11 @@ button {
   animation: status-pulse 2.4s ease-in-out infinite;
 }
 @keyframes status-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(140, 175, 17, 0.4); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(140, 175, 17, 0.3); }
   50% { box-shadow: 0 0 0 6px rgba(140, 175, 17, 0); }
 }
 .hero-statement {
-  display: grid;
-  grid-template-columns: 1.4fr 1fr;
-  gap: 60px;
-  align-items: end;
-  padding: 90px 0 82px;
+  display: none;
 }
 .hero h1 {
   margin: 0;
